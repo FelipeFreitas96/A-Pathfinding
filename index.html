@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<script src="astar.js"></script>
+	</head>
+	<body>
+		<canvas width='600' height='600'></canvas>
+	</body>
+	<script type="text/javascript">
+		var grid = [];
+		var map = [
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		];
+		 
+		function getEventTopos(event) {
+			var topos = {x: 0, y: 0};
+			topos.x = Math.floor(event.clientX / 32);
+			topos.y = Math.floor(event.clientY / 32);
+			return topos;
+		}
+
+		var pos = {x: 0, y: 0};
+		var draw = new Draw(map);
+		draw.loop();
+		 
+		draw.canvas.addEventListener('contextmenu', (event) => {
+			event.preventDefault();
+			var topos = getEventTopos(event);
+
+			map[topos.y][topos.x] = !map[topos.y][topos.x] ? 1 : 0;
+			draw.loadMap(map)
+		});
+
+		draw.canvas.addEventListener('click', (event) => {
+			event.preventDefault();
+			
+			var topos = getEventTopos(event);
+			var astar = new AStar();
+			var startNode = astar.getNodeByPos(0, 0);
+			var endNode = astar.getNodeByPos(topos.x, topos.y);
+
+			path = astar.getPathTo(startNode, endNode);
+
+			draw.erasePath();
+			draw.loadPath(path);
+		});
+	</script>
+</html>
