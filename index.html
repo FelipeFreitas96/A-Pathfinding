@@ -7,19 +7,18 @@
 	</body>
 	<script type="text/javascript">
 		var grid = [];
-		var map = [
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		];
+		var map = [];
+
+		function fillMap(map, size) {
+		    let vmap = [];
+		    for(let y = -size; y < size; y++) {
+			map[y] = [];
+		        for(let x = size; y < size; x++) {
+			    map[y][x] = 0;
+			}
+		    }
+	            return vmap;
+		}
 		 
 		function getEventTopos(event) {
 			var topos = {x: 0, y: 0};
@@ -29,7 +28,7 @@
 		}
 
 		var pos = {x: 0, y: 0};
-		var draw = new Draw(map);
+		var draw = new Draw(fillMap(map));
 		draw.loop();
 		 
 		draw.canvas.addEventListener('contextmenu', (event) => {
